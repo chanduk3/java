@@ -32,4 +32,4 @@ jobs:
       
     - name: Deploy to Tomcat
       run: |
-       curl -v -u admin:admin --upload-file /home/runner/work/java/java/target/user-api-consumer-0.0.1-SNAPSHOT.jar http://18.119.142.242:8080/march5
+       curl -v -u admin:admin --upload-file /home/runner/work/java/java/target/user-api-consumer-0.0.1-SNAPSHOT.jar http://3.129.42.129:8080//manager/text/deploy?path=/java1
