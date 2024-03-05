@@ -32,6 +32,6 @@ jobs:
       
     - name: Deploy to Tomcat
       run: |
-       curl -v -u admin:admin --upload-file /home/runner/work/java/java/target/user-api-consumer-0.0.1-SNAPSHOT.jar "http://3.135.201.150:8080/manager/html/upload?path=/demo-app"
+       curl -v -u admin:admin --upload-file /home/runner/work/java/java/target/user-api-consumer-0.0.1-SNAPSHOT.jar http://http://3.135.201.150:8080/manager/text/deploy?path=/demo-app-context
 
        
