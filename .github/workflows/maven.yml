@@ -45,7 +45,7 @@ jobs:
 
       # - name: Deploy to Amazon Linux
       #   run: |
-      #     scp -r ./target/* ec2-user@18.220.191.26:/etc/tomcat/
+      #     scp -r ./target/* ec2-user@18.220.191.26:/var/lib/tomcat/webapps
       #     ssh ec2-user@18.220.191.26 'sudo systemctl restart tomcat.service'
 
       - name: Copy WAR File to Server
