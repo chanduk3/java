@@ -36,16 +36,44 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install SSH key
-        uses: webfactory/ssh-agent@v0.5.3
+      # - name: Install SSH key
+      #   uses: webfactory/ssh-agent@v0.5.3
+      #   with:
+      #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     known-hosts: |
+      #       18.220.191.26 ssh-rsa sU4/z0n3PNMI+PQLl0WMOlIVvKZnPupFRs4k1aieVwo
+
+      # - name: Deploy to Amazon Linux
+      #   run: |
+      #     scp -r ./target/* ec2-user@18.220.191.26:/etc/tomcat/
+      #     ssh ec2-user@18.220.191.26 'sudo systemctl restart tomcat.service'
+
+      - name: Copy WAR File to Server
+        uses: appleboy/scp-action@master
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-          known-hosts: |
-            18.220.191.26 ssh-rsa sU4/z0n3PNMI+PQLl0WMOlIVvKZnPupFRs4k1aieVwo
+          host: "18.220.191.26"
+          username: "ec2-user"
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "target/*"
+          target: "/etc/tomcat/"
 
-      - name: Deploy to Amazon Linux
-        run: |
-          scp -r ./target/* ec2-user@18.220.191.26:/etc/tomcat/
-          ssh ec2-user@18.220.191.26 'sudo systemctl restart tomcat.service'
+      - name: SSH into Server and Restart Tomcat
+        uses: appleboy/ssh-action@master
+        with:
+          host: "18.220.191.26"
+          username: "ec2-user"
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            sudo systemctl restart tomcat
 
-          
+      - name: Wait for Tomcat to Restart
+        run: sleep 30
+
+      - name: Verify Tomcat Status
+        uses: appleboy/ssh-action@master
+        with:
+          host: "18.220.191.26"
+          username: "ec2-user"
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            sudo systemctl status tomcat
