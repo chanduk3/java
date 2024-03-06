@@ -40,6 +40,8 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known-hosts: |
+            18.220.191.26 ssh-rsa sU4/z0n3PNMI+PQLl0WMOlIVvKZnPupFRs4k1aieVwo
 
       - name: Deploy to Amazon Linux
         run: |
