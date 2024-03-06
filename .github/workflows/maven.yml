@@ -5,6 +5,12 @@ on:
     branches:
       - master
 
+permissions:
+  id-token: write # This is required for the JWT
+  contents: read  # This is required for the actions/checkout
+  security-events: write
+  actions: read
+  
 jobs:
   build:
     runs-on: ubuntu-latest
