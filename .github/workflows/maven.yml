@@ -34,7 +34,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Install SSH key
         uses: webfactory/ssh-agent@v0.5.3
@@ -43,5 +43,7 @@ jobs:
 
       - name: Deploy to Amazon Linux
         run: |
-          scp -r ./target/* ec2-user@18.220.191.26:8080:/path/to/your/webapp
-          ssh ec2-user@18.220.191.26:8080 'sudo systemctl restart tomcat'
+          scp -r ./target/* ec2-user@18.220.191.26:/etc/tomcat/
+          ssh ec2-user@18.220.191.26 'sudo systemctl restart tomcat.service'
+
+          
