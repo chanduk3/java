@@ -36,11 +36,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # - name: Install SSH key
+      #   uses: webfactory/ssh-agent@v0.5.3
+      #   with:
+      #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     known-hosts: |
+      #       18.220.191.26 ssh-rsa sU4/z0n3PNMI+PQLl0WMOlIVvKZnPupFRs4k1aieVwo
+
+      # - name: Deploy to Amazon Linux
+      #   run: |
+      #     scp -r ./target/* ec2-user@18.220.191.26:/var/lib/tomcat/webapps
+      #     ssh ec2-user@18.220.191.26 'sudo systemctl restart tomcat.service'
+
       - name: Copy WAR File to Server
-        run: |
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ssh_key.pem
-          chmod 600 ssh_key.pem
-          scp -i ssh_key.pem target/user-api-consumer-0.0.1-SNAPSHOT.war ec2-user@18.225.36.196:/var/lib/tomcat/webapps/user-api-consumer-0.0.1-SNAPSHOT.war
+        uses: appleboy/scp-action@master
+        with:
+          host: "18.225.36.196"
+          username: "ec2-user"
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "target/user-api-consumer-0.0.1-SNAPSHOT.war"
+          target: "/var/lib/tomcat/webapps"
 
       - name: SSH into Server and Restart Tomcat
         uses: appleboy/ssh-action@master
@@ -62,3 +77,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             sudo systemctl status tomcat
+
+
+
+            
