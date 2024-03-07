@@ -55,7 +55,7 @@ jobs:
           username: "ec2-user"
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "target/*"
-          target: "/var/lib/tomcat/webapps"
+          target: "/usr/share/tomcat/webapps"
 
       - name: SSH into Server and Restart Tomcat
         uses: appleboy/ssh-action@master
