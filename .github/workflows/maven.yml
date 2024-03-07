@@ -54,7 +54,7 @@ jobs:
           host: "18.225.36.196"
           username: "ec2-user"
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "/home/runner/work/java/java/target/user-api-consumer-0.0.1-SNAPSHOT.war"
+          source: "target/*"
           target: "/var/lib/tomcat/webapps"
 
       - name: SSH into Server and Restart Tomcat
