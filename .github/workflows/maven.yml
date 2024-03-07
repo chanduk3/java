@@ -51,7 +51,7 @@ jobs:
       - name: Copy WAR File to Server
         uses: appleboy/scp-action@master
         with:
-          host: "3.138.187.93"
+          host: "18.225.36.196"
           username: "ec2-user"
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "target/*"
@@ -60,7 +60,7 @@ jobs:
       - name: SSH into Server and Restart Tomcat
         uses: appleboy/ssh-action@master
         with:
-          host: "3.138.187.93"
+          host: "18.225.36.196"
           username: "ec2-user"
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
@@ -72,7 +72,7 @@ jobs:
       - name: Verify Tomcat Status
         uses: appleboy/ssh-action@master
         with:
-          host: "3.138.187.93"
+          host: "18.225.36.196"
           username: "ec2-user"
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
